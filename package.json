@@ -1,0 +1,27 @@
+{
+  "name": "gatherer",
+  "version": "0.1.0",
+  "description": "Knowledge Graph query service",
+  "main": "index.js",
+  "dependencies": {
+    "firebase": "^3.0.3",
+    "google-kgsearch": "^0.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cookadlib/gatherer.git"
+  },
+  "keywords": [
+    "firebase"
+  ],
+  "author": "The Cook AdLib Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cookadlib/gatherer/issues"
+  },
+  "homepage": "https://github.com/cookadlib/gatherer#readme"
+}
