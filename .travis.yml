@@ -1,0 +1,24 @@
+dist: trusty
+sudo: required
+language: node_js
+node_js: stable
+addons:
+  firefox: latest
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+  sauce_connect:
+    username: karlitowhoelse
+    access_key: d45485e6-5775-4719-b001-c2c4409feae6
+before_script:
+  - npm install -g bower polylint web-component-tester
+  - bower install
+  - polylint
+script:
+  - echo "Hello Firebase"
+install:
+  - npm install -g firebase-tools
+after_success:
+  - firebase deploy --token "$FIREBASE_TOKEN"

@@ -1,0 +1,17 @@
+*.dat
+*.Dockerfile
+*.gz
+*.log
+*.out
+*.pid
+.DS_Store
+.sass-cache
+.git
+.gitignore
+.tmp
+LICENSE.md
+logs
+node_modules
+npm-debug.log
+pids
+www

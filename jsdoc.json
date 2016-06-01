@@ -1,0 +1,28 @@
+{
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": [
+      "closure",
+      "jsdoc"
+    ]
+  },
+  "recurse": true,
+  "opts": {
+    "destination": "./www/documentation"
+  },
+  "plugins": [
+  ],
+  "source": {
+    "include": [
+      "app",
+      "gulp"
+    ],
+    "exclude": [
+      "app/bower_components"
+    ]
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}

@@ -1,28 +1,72 @@
 {
-  "name": "gatherer",
-  "version": "0.1.0",
+  "private": true,
+  "name": "gatherer.cookadlib.com",
   "description": "Knowledge Graph query service",
+  "version": "0.1.0",
+  "domain": "cookadlib.com",
+  "domains": [
+    "cookadlib.com"
+  ],
+  "subdomain": "api",
+  "homepage": "https://github.com/cookadlib/gatherer#readme",
+  "author": "The Cook AdLib Team",
+  "contributors": [
+    {
+      "name": "Karl Podger",
+      "email": "karl@cookadlib.com"
+    }
+  ],
+  "keywords": [
+    "cooking",
+    "diet",
+    "health",
+    "polymer",
+    "bower",
+    "gulp",
+    "browser-sync",
+    "modernizr",
+    "npm",
+    "node",
+    "docker",
+    "firebase"
+  ],
   "main": "index.js",
   "dependencies": {
+    "appengine": "git://github.com/GoogleCloudPlatform/appengine-nodejs.git",
     "firebase": "^3.0.3",
+    "gcloud": "^0.34.0",
     "google-kgsearch": "^0.1.1",
-    "node-wikipedia": "0.0.2"
+    "googleapis": "^7.0.0",
+    "node-rest-client": "^1.8.0",
+    "node-wikipedia": "0.0.2",
+    "universal-analytics": "^0.3.11"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-core": "^6.9.0",
+    "babel-eslint": "^6.0.4",
+    "babel-polyfill": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.3.13",
+    "jsdoc": "^3.4.0",
+    "jshint-stylish": "^2.2.0",
+    "mocha": "^2.5.1"
+  },
+  "engines": {
+    "node": ">=5.0"
+  },
   "scripts": {
-    "test": "test.js"
+    "prepublish": "babel index.es2016.js --out-file index.js",
+    "start": "node index.js",
+    "test": "mocha test.js",
+    "watch": "babel index.es2016.js --out-file index.js --watch"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cookadlib/gatherer.git"
   },
-  "keywords": [
-    "firebase"
-  ],
-  "author": "The Cook AdLib Team",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/cookadlib/gatherer/issues"
-  },
-  "homepage": "https://github.com/cookadlib/gatherer#readme"
+  }
 }
