@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "firebase": "^3.0.3",
-    "google-kgsearch": "^0.1.1"
+    "google-kgsearch": "^0.1.1",
+    "node-wikipedia": "0.0.2"
   },
   "devDependencies": {},
   "scripts": {
