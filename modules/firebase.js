@@ -1,12 +1,21 @@
 import firebase from 'firebase';
 
-const serviceAccountPath = '/Users/karl/Library/Mobile Documents/com~apple~CloudDocs/Credentials/Google/gatherer@cookadlib-2016.iam.gserviceaccount.com/cookadlib-c1b63c8b161c.json';
+import * as config from './config';
 
-const app = firebase.initializeApp({
-  serviceAccount: serviceAccountPath,
-  databaseURL: 'https://cookadlib-2016.firebaseio.com/'
+export const app = firebase.initializeApp({
+  serviceAccount: config.serviceAccountPath,
+  databaseURL: config.databaseURL
 });
 
 export const db = firebase.database();
 
-export default app;
+export function sanitise(query) {
+  // UTF-8 encoded, cannot contain . $ # [ ] / or ASCII control characters 0-31 or 127
+  // see https://www.firebase.com/docs/web/guide/understanding-data.html
+  if (query) {
+    return query.replace(/[.$\[\]#\/]/g, '_');
+  }
+
+}
+
+export default firebase;
