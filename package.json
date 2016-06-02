@@ -56,10 +56,10 @@
     "node": ">=5.0"
   },
   "scripts": {
-    "prepublish": "babel index.es2016.js --out-file index.js",
-    "start": "node index.js",
+    "prepublish": "mkdir -p build && cp -rp node_modules ./build/node_modules && babel . --out-dir build --ignore node_modules,build",
+    "start": "node build/index.js",
     "test": "mocha test.js",
-    "watch": "babel index.es2016.js --out-file index.js --watch"
+    "watch": "mkdir -p build && cp -rp node_modules ./build/node_modules && babel . --out-dir build --ignore node_modules,build --watch"
   },
   "repository": {
     "type": "git",
