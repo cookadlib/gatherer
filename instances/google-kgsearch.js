@@ -1,6 +1,6 @@
 import KGSearch from 'google-kgsearch';
 
-import * as config from './config';
+import * as config from '../config';
 
 const kGraph = KGSearch(config.googleApisKey);
 

@@ -1,8 +1,8 @@
-import firebase, {db, sanitise} from './modules/firebase';
-import {search} from './modules/google-kgsearch';
-import {mediawiki} from './modules/nodemw';
+import firebase, {db, sanitiseKey} from './instances/firebase';
+import {search} from './instances/google-kgsearch';
+import {mediawiki} from './instances/nodemw';
 
-import * as config from './modules/config';
+import * as config from './config';
 
 // Run this code on a user query if no
 // match is found in the Firebase data.
@@ -18,8 +18,12 @@ import * as config from './modules/config';
 
 // How do we populate all of the levels of the taxonomy?  "Instance of" Triples?
 
-const ingredientsRef = db.ref('ingredients');
-const queriesRef = db.ref('queries');
+const dishRef = db.ref('dish');
+const ingredientRef = db.ref('ingredient');
+const nutrientRef = db.ref('nutrient');
+const queryRef = db.ref('query');
+const recipeRef = db.ref('recipe');
+const userRef = db.ref('user');
 
 const query = 'Oranges';
 
@@ -100,7 +104,7 @@ function getWikiData(item) {
 }
 
 function saveQuery(item, query) {
-  let key = sanitise(query);
+  let key = sanitiseKey(query);
 
   let queryEntry = {
     kgid: item.result['@id'],
@@ -136,7 +140,7 @@ function saveQuery(item, query) {
 }
 
 function saveIngredient(item) {
-  let key = sanitise(item.result.name);
+  let key = sanitiseKey(item.result.name);
 
   let ingredientEntry = item.result;
 

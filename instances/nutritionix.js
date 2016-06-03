@@ -1,5 +1,7 @@
 import {Client as NodeRestClient} from 'node-rest-client';
 
+import * as config from '../config';
+
 const client = new NodeRestClient();
 
 let usdaBrandId = '513fcc648110a4cafb90ca5e';
