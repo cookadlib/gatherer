@@ -1,3 +1,41 @@
+import async from 'async';
+import request from 'request';
+
+function httpGet(url, callback) {
+  const options = {
+    url :  url,
+    json : true
+  };
+  request(options,
+    function(err, res, body) {
+      callback(err, body);
+    }
+  );
+}
+
+const urls= [
+  'http://data.okfn.org/data/core/language-codes/r/ietf-language-tags.json',
+  'http://data.okfn.org/data/core/language-codes/r/language-codes-full.json'
+];
+
+async.map(urls, httpGet, (error, response) => {
+  if (error) {
+    return console.log(error);
+  }
+
+  // console.log(response);
+
+  let mergedData = response[0];
+
+  // console.log('mergedData', mergedData);
+});
+
+
+
+
+
+
+
 import firebase, {db, sanitiseKey} from './instances/firebase';
 import {search} from './instances/google-kgsearch';
 import {mediawiki} from './instances/nodemw';
