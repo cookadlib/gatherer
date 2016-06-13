@@ -63,7 +63,6 @@
   },
   "scripts": {
     "build": "mkdir -p build && rsync node_modules ./build/node_modules && babel . --out-dir build --ignore node_modules,build",
-    "prepublish": "mkdir -p build && rsync node_modules ./build/node_modules && babel . --out-dir build --ignore node_modules,build",
     "start": "node build/index.js",
     "test": "mocha test.js",
     "watch": "mkdir -p build && rsync node_modules ./build/node_modules && babel . --out-dir build --ignore node_modules,build --watch"
