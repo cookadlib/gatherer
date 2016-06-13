@@ -36,6 +36,7 @@
     "async": "^2.0.0-rc.6",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "camelcase": "^3.0.0",
+    "chemical-formula": "^1.1.2",
     "firebase": "^3.0.3",
     "gcloud": "^0.34.0",
     "google-kgsearch": "^0.1.1",
@@ -44,6 +45,7 @@
     "needlepoint": "^1.0.5",
     "node-rest-client": "^1.8.0",
     "nodemw": "^0.9.0",
+    "replaceall": "^0.1.6",
     "request": "^2.72.0",
     "universal-analytics": "^0.3.11"
   },
