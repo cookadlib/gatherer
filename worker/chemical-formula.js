@@ -12,8 +12,6 @@ const formulasRef = db.ref('/chemical/formula');
 function processFormula(formula) {
   const key = formula.KEGG_ID.toLowerCase(); // see http://www.genome.jp/kegg/
 
-  // const formulaRef = formulasRef.child(key);
-
   let chemicalFormulaInstance;
 
   if (formula.formula) {
@@ -39,7 +37,7 @@ function processFormula(formula) {
       ]
     },
     // url: 'http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchi/JSON',
-    url: 'http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchi/property/MolecularFormula/JSON',
+    url: 'http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchi/property/MolecularFormula/synonyms/JSON',
     json: true
   };
 
@@ -49,6 +47,9 @@ function processFormula(formula) {
     }
 
     const pubchem = body;
+
+    console.log('pubchem', pubchem);
+    process.exit();
 
     if (pubchem && pubchem.PropertyTable && pubchem.PropertyTable.Properties) {
       formula.CID = pubchem.PropertyTable.Properties.CID;

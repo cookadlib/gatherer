@@ -8,6 +8,13 @@ const argv = minimist(process.argv.slice(2));
 
 const location = camelCase(replaceall('/', '-', argv.location));
 
-console.log(`Running ${argv.location} worker`);
+(async function() {
+  console.log(`Running ${argv.location} worker`);
 
-worker[location]();
+  try {
+    await worker[location]();
+  }
+  catch (error) {
+    console.error(error);
+  }
+}());
