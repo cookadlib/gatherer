@@ -67,16 +67,18 @@ const processElement = async function(element) {
     .catch(errors.StatusCodeError, (reason) => {
       // The server responded with a status codes other than 2xx.
       // Check reason.statusCode
-      logger.error(reason.statusCode);
+      return logger.error(reason.statusCode);
     })
     .catch(errors.RequestError, (reason) => {
       // The request failed due to technical reasons.
       // reason.cause is the Error object Request would pass into a callback.
-      logger.error(reason.cause);
+      return logger.error(reason.cause);
     })
     .catch((error) => {
-      logger.error(error);
+      return logger.error(error);
     });
+
+    return await element;
 
   }
   catch (error) {
@@ -108,15 +110,15 @@ const worker = async function() {
     .catch(errors.StatusCodeError, (reason) => {
       // The server responded with a status codes other than 2xx.
       // Check reason.statusCode
-      logger.error(reason.statusCode);
+      return logger.error(reason.statusCode);
     })
     .catch(errors.RequestError, (reason) => {
       // The request failed due to technical reasons.
       // reason.cause is the Error object Request would pass into a callback.
-      logger.error(reason.cause);
+      return logger.error(reason.cause);
     })
     .catch((error) => {
-      logger.error(error);
+      return logger.error(error);
     });
 
   }

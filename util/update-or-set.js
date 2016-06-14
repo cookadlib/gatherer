@@ -9,12 +9,12 @@ const update = async function(ref, key, data) {
       logger.info(`Data updated for "${key}" successfully.`);
     })
     .catch(async function(error) {
-      logger.error(error);
+      return logger.error(error);
     });
 
   }
   catch (error) {
-    logger.error(error);
+    return logger.error(error);
   }
 
 };
@@ -23,17 +23,17 @@ const save = async function(ref, key, data) {
 
   try {
 
-    await ref.push().set(data)
+    await ref.set(data)
     .then(async function(snapshot) {
       logger.info(`New data saved for "${key}" successfully.`);
     })
     .catch(async function(error) {
-      logger.error(error);
+      return logger.error(error);
     });
 
   }
   catch (error) {
-    logger.error(error);
+    return logger.error(error);
   }
 
 };
@@ -55,12 +55,12 @@ const updateOrSet = async function(ref, key, data) {
 
     })
     .catch(async function(error) {
-      logger.error(error);
+      return logger.error(error);
     });
 
   }
   catch (error) {
-    logger.error(error);
+    return logger.error(error);
   }
 
 };

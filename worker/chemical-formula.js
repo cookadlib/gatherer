@@ -14,7 +14,7 @@ const vitamins = ['A', 'B1', 'B2', 'B3', 'B5', 'B6', 'B7', 'B9', 'B12', 'C', 'D'
 const formulasRef = db.ref('/chemical/formula');
 const vitaminsRef = db.ref('/chemical/vitamin');
 
-const getFormulaDetails = async function(formula, key) {
+const getFormulaDetails = async function(formula) {
 
   try {
 
@@ -61,7 +61,7 @@ const getFormulaDetails = async function(formula, key) {
           chemicalFormulaInstance = chemicalFormula(formula.MolecularFormula);
         }
         catch (exception) {
-          logger.error(exception.message);
+          return logger.error(exception.message);
         }
         finally {
           if (chemicalFormulaInstance) {
@@ -75,15 +75,15 @@ const getFormulaDetails = async function(formula, key) {
     .catch(errors.StatusCodeError, (reason) => {
       // The server responded with a status codes other than 2xx.
       // Check reason.statusCode
-      logger.error(reason.statusCode);
+      return logger.error(reason.statusCode);
     })
     .catch(errors.RequestError, (reason) => {
       // The request failed due to technical reasons.
       // reason.cause is the Error object Request would pass into a callback.
-      logger.error(reason.cause);
+      return logger.error(reason.cause);
     })
     .catch((error) => {
-      logger.error(error);
+      return logger.error(error);
     });
 
   }
@@ -91,9 +91,9 @@ const getFormulaDetails = async function(formula, key) {
     return logger.error(error);
   }
 
-}
+};
 
-const getFormulaSynonyms = async function(formula, key) {
+const getFormulaSynonyms = async function(formula) {
 
   try {
 
@@ -117,24 +117,24 @@ const getFormulaSynonyms = async function(formula, key) {
 
     await requestPromise(options)
     .then(async function(body) {
-      const pubchem = body;
+      const pubchem = body.InformationList.Information[0];
 
-      if (pubchem && InformationList.Information && InformationList.Information.Synonym) {
+      if (pubchem && pubchem.Synonym) {
 
-        formula.synonym = InformationList.Information.Synonym;
+        formula.synonym = pubchem.Synonym;
 
         for (let vitamin of vitamins) {
-          logger.log('vitamin', vitamin);
+logger.log('vitamin', vitamin);
 
-          let vitaminPosition = InformationList.Information.Synonym.indexOf(`vitamin ${vitamin}`);
-          logger.log('found', vitamin);
+          let vitaminPosition = pubchem.Synonym.indexOf(`vitamin ${vitamin}`);
+logger.log('found', vitamin);
           if (vitaminPosition !== -1) {
             element.vitamin = {};
             element.vitamin[vitamin] = true;
 
             let vitaminData = {
               formula: {
-                'InChI': key
+                'InChI': formula.key
               },
               source: [
                 {
@@ -146,10 +146,7 @@ const getFormulaSynonyms = async function(formula, key) {
                 }
               ]
             };
-            logger.log('vitaminData', vitaminData);
-
-            await updateOrSet(vitaminsRef, vitamin, vitaminData);
-            break;
+logger.log('vitaminData', vitaminData);
           }
 
         }
@@ -161,30 +158,32 @@ const getFormulaSynonyms = async function(formula, key) {
     .catch(errors.StatusCodeError, (reason) => {
       // The server responded with a status codes other than 2xx.
       // Check reason.statusCode
-      logger.error(reason.statusCode);
+      return logger.error(reason.statusCode);
     })
     .catch(errors.RequestError, (reason) => {
       // The request failed due to technical reasons.
       // reason.cause is the Error object Request would pass into a callback.
-      logger.error(reason.cause);
+      return logger.error(reason.cause);
     })
     .catch((error) => {
-      logger.error(error);
+      return logger.error(error);
     });
+
+    return await formula;
 
   }
   catch (error) {
     return logger.error(error);
   }
 
-}
+};
 
 const processFormula = async function(formula) {
 
   try {
 
-    // const key = formula.KEGG_ID.toLowerCase(); // see http://www.genome.jp/kegg/
-    const key = formula.InChI;
+    const key = formula.KEGG_ID.toLowerCase(); // see http://www.genome.jp/kegg/
+    // const key = formula.InChI;
 
     formula.timestamp = firebase.database.ServerValue.TIMESTAMP;
 
@@ -197,7 +196,7 @@ const processFormula = async function(formula) {
     return logger.error(error);
   }
 
-}
+};
 
 const worker = async function() {
 
@@ -224,15 +223,15 @@ const worker = async function() {
     .catch(errors.StatusCodeError, (reason) => {
       // The server responded with a status codes other than 2xx.
       // Check reason.statusCode
-      logger.error(reason.statusCode);
+      return logger.error(reason.statusCode);
     })
     .catch(errors.RequestError, (reason) => {
       // The request failed due to technical reasons.
       // reason.cause is the Error object Request would pass into a callback.
-      logger.error(reason.cause);
+      return logger.error(reason.cause);
     })
     .catch((error) => {
-      logger.error(error);
+      return logger.error(error);
     });
 
   }
