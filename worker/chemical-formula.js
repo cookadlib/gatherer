@@ -1,107 +1,247 @@
 import _ from 'lodash';
 import async from 'async';
 import chemicalFormula from 'chemical-formula';
-import request from 'request';
+import errors from 'request-promise/errors';
+import requestPromise from 'request-promise';
 
 import firebase, {db, sanitiseKey} from '../instance/firebase';
 
+import logger from '../util/logger';
 import updateOrSet from '../util/update-or-set';
 
+const vitamins = ['A', 'B1', 'B2', 'B3', 'B5', 'B6', 'B7', 'B9', 'B12', 'C', 'D', 'E', 'K'];
+
 const formulasRef = db.ref('/chemical/formula');
+const vitaminsRef = db.ref('/chemical/vitamin');
 
-function processFormula(formula) {
-  const key = formula.KEGG_ID.toLowerCase(); // see http://www.genome.jp/kegg/
+const getFormulaDetails = async function(formula, key) {
 
-  let chemicalFormulaInstance;
+  try {
 
-  if (formula.formula) {
-    formula.webfactional = {
-      formula: formula.formula
+    const options = {
+      headers: {
+        'User-Agent': 'request'
+      },
+      method: 'POST',
+      postData: {
+        mimeType: 'application/x-www-form-urlencoded',
+        params: [
+          {
+            name: 'inchi',
+            value: formula.InChI
+          }
+        ]
+      },
+      url: 'http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchi/property/MolecularFormula/JSON',
+      json: true
     };
 
-    delete formula.formula;
-  }
+    await requestPromise(options)
+    .then(async function(body) {
+      const pubchem = body;
 
-  const options = {
-    headers: {
-      'User-Agent': 'request'
-    },
-    method: 'POST',
-    postData: {
-      mimeType: 'application/x-www-form-urlencoded',
-      params: [
-        {
-          name: 'inchi',
-          value: formula.InChI
-        }
-      ]
-    },
-    // url: 'http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchi/JSON',
-    url: 'http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchi/property/MolecularFormula/synonyms/JSON',
-    json: true
-  };
+      let chemicalFormulaInstance;
 
-  request(options, (error, response, body) => {
-    if (error) {
-      return console.log(error);
-    }
+      if (formula.formula) {
+        formula.equilibrator = {
+          formula: formula.formula
+        };
 
-    const pubchem = body;
-
-    console.log('pubchem', pubchem);
-    process.exit();
-
-    if (pubchem && pubchem.PropertyTable && pubchem.PropertyTable.Properties) {
-      formula.CID = pubchem.PropertyTable.Properties.CID;
-      formula.MolecularFormula = pubchem.PropertyTable.Properties.MolecularFormula;
-    }
-
-    try {
-      chemicalFormulaInstance = chemicalFormula(formula.MolecularFormula);
-    }
-    catch (exception) {
-      console.log(exception.message);
-    }
-    finally {
-      if (chemicalFormulaInstance) {
-        formula.elements = chemicalFormulaInstance;
+        delete formula.formula;
       }
-    }
 
-    // formula.vitamin.d3 = true;
+      if (pubchem && pubchem.PropertyTable && pubchem.PropertyTable.Properties) {
+        formula.CID = pubchem.PropertyTable.Properties.CID;
+        formula.MolecularFormula = pubchem.PropertyTable.Properties.MolecularFormula;
+      }
 
-    formula.timestamp = firebase.database.ServerValue.TIMESTAMP;
+      if (formula.MolecularFormula) {
 
-    updateOrSet(formulasRef, key, formula);
-  });
+        try {
+          chemicalFormulaInstance = chemicalFormula(formula.MolecularFormula);
+        }
+        catch (exception) {
+          logger.error(exception.message);
+        }
+        finally {
+          if (chemicalFormulaInstance) {
+            formula.elements = chemicalFormulaInstance;
+          }
+        }
+
+      }
+
+    })
+    .catch(errors.StatusCodeError, (reason) => {
+      // The server responded with a status codes other than 2xx.
+      // Check reason.statusCode
+      logger.error(reason.statusCode);
+    })
+    .catch(errors.RequestError, (reason) => {
+      // The request failed due to technical reasons.
+      // reason.cause is the Error object Request would pass into a callback.
+      logger.error(reason.cause);
+    })
+    .catch((error) => {
+      logger.error(error);
+    });
+
+  }
+  catch (error) {
+    return logger.error(error);
+  }
 
 }
 
-export const worker = () => {
+const getFormulaSynonyms = async function(formula, key) {
 
-  const options = {
-    encoding: null,
-    gzip: true,
-    headers: {
-      'User-Agent': 'request'
-    },
-    url: 'http://equilibrator2.milolab.webfactional.com/media/downloads/kegg_compounds.json.gz', // see http://equilibrator.weizmann.ac.il/download
-    json: true
-  };
+  try {
 
-  request(options, (error, response, body) => {
-    if (error) {
-      return console.log(error);
-    }
+    const options = {
+      headers: {
+        'User-Agent': 'request'
+      },
+      method: 'POST',
+      postData: {
+        mimeType: 'application/x-www-form-urlencoded',
+        params: [
+          {
+            name: 'inchi',
+            value: formula.InChI
+          }
+        ]
+      },
+      url: 'http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchi/synonyms/JSON',
+      json: true
+    };
 
-    const formulas = body;
+    await requestPromise(options)
+    .then(async function(body) {
+      const pubchem = body;
 
-    for (let formula of formulas) {
-      processFormula(formula);
-    }
+      if (pubchem && InformationList.Information && InformationList.Information.Synonym) {
 
-  });
+        formula.synonym = InformationList.Information.Synonym;
+
+        for (let vitamin of vitamins) {
+          logger.log('vitamin', vitamin);
+
+          let vitaminPosition = InformationList.Information.Synonym.indexOf(`vitamin ${vitamin}`);
+          logger.log('found', vitamin);
+          if (vitaminPosition !== -1) {
+            element.vitamin = {};
+            element.vitamin[vitamin] = true;
+
+            let vitaminData = {
+              formula: {
+                'InChI': key
+              },
+              source: [
+                {
+                  classification: {
+                    group: {
+                      lichen: true
+                    }
+                  }
+                }
+              ]
+            };
+            logger.log('vitaminData', vitaminData);
+
+            await updateOrSet(vitaminsRef, vitamin, vitaminData);
+            break;
+          }
+
+        }
+
+      }
+
+      // formula.vitamin.d3 = true;
+    })
+    .catch(errors.StatusCodeError, (reason) => {
+      // The server responded with a status codes other than 2xx.
+      // Check reason.statusCode
+      logger.error(reason.statusCode);
+    })
+    .catch(errors.RequestError, (reason) => {
+      // The request failed due to technical reasons.
+      // reason.cause is the Error object Request would pass into a callback.
+      logger.error(reason.cause);
+    })
+    .catch((error) => {
+      logger.error(error);
+    });
+
+  }
+  catch (error) {
+    return logger.error(error);
+  }
+
+}
+
+const processFormula = async function(formula) {
+
+  try {
+
+    // const key = formula.KEGG_ID.toLowerCase(); // see http://www.genome.jp/kegg/
+    const key = formula.InChI;
+
+    formula.timestamp = firebase.database.ServerValue.TIMESTAMP;
+
+    await getFormulaDetails(formula);
+    await getFormulaSynonyms(formula);
+    await updateOrSet(formulasRef, key, formula);
+
+  }
+  catch (error) {
+    return logger.error(error);
+  }
+
+}
+
+const worker = async function() {
+
+  try {
+
+    const options = {
+      encoding: null,
+      gzip: true,
+      headers: {
+        'User-Agent': 'request'
+      },
+      url: 'http://equilibrator2.milolab.webfactional.com/media/downloads/kegg_compounds.json.gz', // see http://equilibrator.weizmann.ac.il/download
+      json: true
+    };
+
+    await requestPromise(options)
+    .then(async function(body) {
+      const formulas = body;
+
+      for (let formula of formulas) {
+        processFormula(formula);
+      }
+    })
+    .catch(errors.StatusCodeError, (reason) => {
+      // The server responded with a status codes other than 2xx.
+      // Check reason.statusCode
+      logger.error(reason.statusCode);
+    })
+    .catch(errors.RequestError, (reason) => {
+      // The request failed due to technical reasons.
+      // reason.cause is the Error object Request would pass into a callback.
+      logger.error(reason.cause);
+    })
+    .catch((error) => {
+      logger.error(error);
+    });
+
+  }
+  catch (error) {
+    return logger.error(error);
+  }
 
 };
+
+export {worker};
 
 export default worker;

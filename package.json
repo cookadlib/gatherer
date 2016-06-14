@@ -48,7 +48,8 @@
     "nodemw": "^0.9.0",
     "replaceall": "^0.1.6",
     "request-promise": "^3.0.0",
-    "universal-analytics": "^0.3.11"
+    "universal-analytics": "^0.3.11",
+    "winston": "^2.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",

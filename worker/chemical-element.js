@@ -5,6 +5,7 @@ import requestPromise from 'request-promise';
 
 import firebase, {db, sanitiseKey} from '../instance/firebase';
 
+import logger from '../util/logger';
 import updateOrSet from '../util/update-or-set';
 
 // Dietary elements, see https://en.wikipedia.org/wiki/Dietary_element
@@ -15,7 +16,7 @@ const dietaryElements = {
   ultratrace: ['B', 'Cr', 'As', 'Ni', 'Si', 'V']
 };
 
-const elementsRef = db.ref('/chemical/element');
+const elementsRef = db.ref('/chemical/element1');
 
 const processElement = async function(element) {
 
@@ -33,12 +34,12 @@ const processElement = async function(element) {
     .then(async function(body) {
       const key = element.symbol.toLowerCase();
 
-      const details = body.entities[element.item_id];
+      const wikidata = body.entities[element.item_id];
 
-      if (details.id === element.item_id) {
+      if (wikidata.id === element.item_id) {
         delete element.item_id;
         delete element.label;
-        _.merge(element, details);
+        _.merge(element, wikidata);
       }
 
       if (dietaryElements.common.indexOf(element.symbol) !== -1) {
@@ -66,20 +67,20 @@ const processElement = async function(element) {
     .catch(errors.StatusCodeError, (reason) => {
       // The server responded with a status codes other than 2xx.
       // Check reason.statusCode
-      console.error(reason.statusCode);
+      logger.error(reason.statusCode);
     })
     .catch(errors.RequestError, (reason) => {
       // The request failed due to technical reasons.
       // reason.cause is the Error object Request would pass into a callback.
-      console.error(reason.cause);
+      logger.error(reason.cause);
     })
     .catch((error) => {
-      console.error(error);
+      logger.error(error);
     });
 
   }
   catch (error) {
-    return console.error(error);
+    return logger.error(error);
   }
 
 };
@@ -87,11 +88,6 @@ const processElement = async function(element) {
 const worker = async function() {
 
   try {
-
-    db.ref('/chemical/element1').remove;
-    db.ref('/chemical/element4').remove;
-
-    setTimeout(() => process.exit(), 3000);
 
     const options = {
       headers: {
@@ -112,20 +108,20 @@ const worker = async function() {
     .catch(errors.StatusCodeError, (reason) => {
       // The server responded with a status codes other than 2xx.
       // Check reason.statusCode
-      console.error(reason.statusCode);
+      logger.error(reason.statusCode);
     })
     .catch(errors.RequestError, (reason) => {
       // The request failed due to technical reasons.
       // reason.cause is the Error object Request would pass into a callback.
-      console.error(reason.cause);
+      logger.error(reason.cause);
     })
     .catch((error) => {
-      console.error(error);
+      logger.error(error);
     });
 
   }
   catch (error) {
-    return console.error(error);
+    return logger.error(error);
   }
 
 };
