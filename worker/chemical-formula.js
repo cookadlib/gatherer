@@ -88,6 +88,7 @@ const getFormulaDetails = async function(formula) {
       let chemicalFormulaInstance;
 
       if (formula.formula) {
+
         formula.equilibrator = {
           formula: formula.formula
         };
@@ -109,9 +110,11 @@ const getFormulaDetails = async function(formula) {
           return logger.error(exception.message);
         }
         finally {
+
           if (chemicalFormulaInstance) {
             formula.elements = chemicalFormulaInstance;
           }
+
         }
 
       }
@@ -158,9 +161,11 @@ const assignVitamin = async function(formula) {
 
       if (snapshot.exists()) {
 
-        await vitaminsRef.update(data)
+        let key = snapshot.key();
+
+        await vitaminsRef.child(key).set(data)
         .then(async function(snapshot) {
-          logger.info(`Data updated for "${snapshot.key()}" successfully`);
+          logger.info(`New data saved for "${key}" successfully`);
         })
         .catch(async function(error) {
           return logger.error(error);
@@ -170,7 +175,7 @@ const assignVitamin = async function(formula) {
 
         await vitaminsRef.push().set(data)
         .then(async function(snapshot) {
-          logger.info(`New data saved for "${snapshot.key()}" successfully`);
+          logger.info(`New data saved for "${key}" successfully`);
         })
         .catch(async function(error) {
           return logger.error(error);
@@ -246,7 +251,6 @@ const getFormulaSynonyms = async function(formula) {
 
       }
 
-      // formula.vitamin.d3 = true;
     })
     .catch(errors.StatusCodeError, (reason) => {
       // The server responded with a status codes other than 2xx.
@@ -276,7 +280,6 @@ const processFormula = async function(formula) {
   try {
 
     const key = formula.KEGG_ID.toLowerCase(); // see http://www.genome.jp/kegg/
-    // const key = formula.InChI;
 
     formula.timestamp = firebase.database.ServerValue.TIMESTAMP;
 

@@ -10,6 +10,7 @@ const worker = async function() {
 
   // db.ref('/chemical/element1').remove();
   // db.ref('/chemical/formula').remove();
+  // vitaminsRef.remove();
 
   // formulasRef.once('value').then((snapshot) => {
   //   return logger.log(snapshot.val());
