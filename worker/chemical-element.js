@@ -62,7 +62,7 @@ const processElement = async function(element) {
 
       element.timestamp = firebase.database.ServerValue.TIMESTAMP;
 
-      await updateOrSet(elementsRef, key, element);
+      await updateOrSet(elementsRef, element, key);
     })
     .catch(errors.StatusCodeError, (reason) => {
       // The server responded with a status codes other than 2xx.

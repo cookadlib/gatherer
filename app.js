@@ -2,19 +2,30 @@ import camelCase from 'camelcase';
 import minimist from 'minimist';
 import replaceall from 'replaceall';
 
+import logger from './util/logger';
+
 import * as worker from './worker';
 
 const argv = minimist(process.argv.slice(2));
 
-const location = camelCase(replaceall('/', '-', argv.location));
+if (argv.location) {
 
-(async function() {
-  console.log(`Running ${argv.location} worker`);
+  const location = camelCase(replaceall('/', '-', argv.location));
 
-  try {
-    await worker[location]();
-  }
-  catch (error) {
-    console.error(error);
-  }
-}());
+  (async function() {
+
+    logger.info(`Running ${argv.location} worker`);
+
+    try {
+      await worker[location]();
+    }
+    catch (error) {
+      logger.error(error);
+    }
+
+  }());
+
+} else {
+  logger.error('Location parameter not defined');
+  process.exit();
+}
