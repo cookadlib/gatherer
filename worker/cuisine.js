@@ -8,7 +8,7 @@ import firebase, {db, sanitiseKey} from '../instance/firebase';
 import logger from '../util/logger';
 import updateOrSet from '../util/update-or-set';
 
-const vitaminRef = db.ref('/chemical/vitamin');
+const cuisineRef = db.ref('/cuisine');
 
 const worker = async function() {
 

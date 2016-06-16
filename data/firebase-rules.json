@@ -1,0 +1,17 @@
+{
+  "rules": {
+    "users": {
+      "$user_id": {
+        ".write": "$user_id === auth.uid"
+      }
+    },
+    "ingredient": {
+      ".indexOn": ".value"
+    },
+    "foo": {
+      ".read": true,
+      ".write": true,
+      ".validate": "newData.isString() && newData.val().length < 100"
+    }
+  }
+}

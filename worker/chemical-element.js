@@ -16,7 +16,7 @@ const dietaryElements = {
   ultratrace: ['B', 'Cr', 'As', 'Ni', 'Si', 'V']
 };
 
-const elementsRef = db.ref('/chemical/element1');
+const elementRef = db.ref('/chemical/element');
 
 const processElement = async function(element) {
 
@@ -62,7 +62,7 @@ const processElement = async function(element) {
 
       element.timestamp = firebase.database.ServerValue.TIMESTAMP;
 
-      await updateOrSet(elementsRef, element, key);
+      await updateOrSet(elementRef, element, key);
     })
     .catch(errors.StatusCodeError, (reason) => {
       // The server responded with a status codes other than 2xx.

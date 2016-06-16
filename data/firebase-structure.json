@@ -1,0 +1,699 @@
+{
+  "chemical" : {
+    "element" : {
+      "c" : {
+        "symbol" : "C",
+        "dietary" : {
+          "common": true
+        }
+      },
+      "ca" : {
+        "symbol" : "Ca",
+        "dietary" : {
+          "major": true
+        }
+      },
+      "fe" : {
+        "symbol" : "Fe",
+        "dietary" : {
+          "trace": true
+        }
+      },
+      "b" : {
+        "symbol" : "B",
+        "dietary" : {
+          "ultratrace": true
+        }
+      }
+    },
+    "formula" : {
+      "h2o" : {
+        "formula" : "H2O"
+      },
+      "c27h44O" : {
+        "formula" : "C27H44O",
+        "vitamin" : {
+          "d3" : true
+        }
+      }
+    },
+    "vitamin" : {
+      "d3" : {
+        "name" : "D3",
+        "formula" : "c27h44O",
+        "source" : [
+          {
+            "classification" : {
+              "group" : {
+                "lichen" : true
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "cuisine" : {
+    "italian" : {
+      "name" : "italian",
+      "region" : [
+        {
+          "italy" : true
+        }
+      ]
+    }
+  },
+  "diet" : {
+    "vegetarian" : {
+      "name" : "Vegetarian",
+      "exclude" : [
+        {
+          "classification" : {
+            "kingdom" : {
+              "animalia" : true
+            }
+          }
+        },
+        {
+          "product" : {
+            "animal" : true
+          }
+        }
+      ]
+    },
+    "pescatarian" : {
+      "name" : "Pescatarian",
+      "extend" : [
+        {
+          "diet" : {
+            "vegetarian" : true
+          }
+        }
+      ],
+      "include" : [
+        {
+          "classification" : {
+            "unranked" : {
+              "craniata" : true
+            }
+          }
+        }
+      ]
+    },
+    "halal" : {
+      "name" : "Halal",
+      "exclude" : [
+        {
+          "classification" : {
+            "genus" : {
+              "sus" : true
+            }
+          }
+        },
+        {
+          "product" : {
+            "blood" : true
+          }
+        },
+        {
+          "group" : {
+            "alcohol" : true
+          }
+        }
+      ],
+      "extend" : [
+        {
+          "diet" : {
+            "kashrut" : true
+          }
+        }
+      ]
+    },
+    "kashrut" : {
+      "name" : "Kashrut",
+      "exclude" : [
+        {
+          "classification" : {
+            "genus" : {
+              "sus" : true
+            }
+          }
+        },
+        {
+          "group" : {
+            "shellfish" : true
+          }
+        }
+      ]
+    }
+  },
+  "food" : {
+    "group" : {
+      "dairy" : {
+        "<placeholder>" : true
+      },
+      "fruits" : {
+        "<placeholder>" : true
+      },
+      "grains-beans-legumes" : {
+        "grains" : {
+          "<placeholder>" : true
+        },
+        "beans" : {
+          "<placeholder>" : true
+        },
+        "legumes" : {
+          "<placeholder>" : true
+        }
+      },
+      "meat" : {
+        "<placeholder>" : true
+      },
+      "confections" : {
+        "<placeholder>" : true
+      },
+      "vegetables" : {
+        "<placeholder>" : true
+      },
+      "water" : {
+        "<placeholder>" : true
+      }
+    },
+    "type" : {
+      "pasta" : {
+        "<placeholder>" : true
+      },
+      "sauce" : {
+        "<placeholder>" : true
+      },
+      "soup" : {
+        "<placeholder>" : true
+      }
+    }
+  },
+  "language" : {
+    "language-codes" : [
+      {
+        "<placeholder>" : true
+      }
+    ],
+    "ietf-language-tags" : [
+      {
+        "<placeholder>" : true
+      }
+    ]
+  },
+  "method" : {
+    "slaughter" : {
+      "description" : "Lorem ipsum"
+    },
+    "dhabihah" : {
+      "basis" : [
+        {
+          "slaughter" : true
+        }
+      ],
+      "description" : "Dhabīḥah (or zabiha, Arabic: ذَبِيْحَة‎‎ dhabīḥah IPA: [ðæˈbiːħɐ], 'slaughter'(noun)) is, in Islamic law, the prescribed method of ritual slaughter of all lawful halal animals (goats, sheep, cows, chicken) excluding locusts, fish, and most sea-life."
+    },
+    "cut" : {
+      "description" : "Lorem ipsum"
+    },
+    "chop" : {
+      "basis" : [
+        {
+          "cut" : true
+        }
+      ],
+      "description" : "Lorem ipsum"
+    },
+    "bake" : {
+      "basis" : [
+        {
+          "cook" : true
+        }
+      ]
+    },
+    "top and tail" : {
+      "basis" : [
+        {
+          "cut" : true
+        }
+      ]
+    },
+    "extrude" : {
+      "basis" : [
+        {
+          "cut" : true
+        },
+        {
+          "press" : true
+        }
+      ]
+    }
+  },
+  "nutrition": {
+    "macronutrient": {
+      "description": "Macronutrients provide the bulk energy an organism's metabolic system needs to function.  Macronutrients are converted to, and used for, energy.",
+      "type": {
+        "fat": {
+          "<placeholder>" : true
+        },
+        "protein": {
+          "<placeholder>" : true
+        },
+        "carbohydrate": {
+          "<placeholder>" : true
+        }
+      }
+    },
+    "micronutrient": {
+      "description": "Micronutrients provide the necessary cofactors for metabolism to be carried out.  Micronutrients are used to build and repair tissues and to regulate body processes.",
+      "type": {
+        "fat": {
+          "<placeholder>" : true
+        },
+        "protein": {
+          "<placeholder>" : true
+        },
+        "carbohydrate": {
+          "<placeholder>" : true
+        }
+      }
+    },
+    "energy": {
+      "<placeholder>" : true
+    },
+    "carbohydrate": {
+      "description": "Lorem ipsum",
+      "type": {
+        "sugar": {
+          "monosaccharide": {
+            "<placeholder>" : true
+          },
+          "disaccharide": {
+            "description": "Lorem ipsum",
+            "type": {
+              "sucrose": {
+                "description": "Lorem ipsum"
+              },
+              "fructose": {
+                "description": "Lorem ipsum"
+              }
+            }
+          }
+        },
+        "dietaryFibre": {
+          "<placeholder>" : true
+        }
+      }
+    }
+  },
+  "preparation" : {
+    "ketchup" : {
+      "name" : "Ketchup",
+      "type" : {
+        "group" : {
+          "sauce" : {
+            "table" : true
+          }
+        }
+      },
+      "cuisine" : [
+        {
+          "chinese" : true
+        },
+        {
+          "malaysian" : true
+        },
+        {
+          "singaporean" : true
+        },
+        {
+          "british" : true
+        },
+        {
+          "american" : true
+        }
+      ]
+    },
+    "tomato-paste" : {
+      "name" : "tomato paste",
+      "type" : {
+        "group" : {
+          "sauce" : true
+        }
+      },
+      "cuisine" : [
+        {
+          "italian" : true
+        },
+        {
+          "french" : true
+        },
+        {
+          "spanish" : true
+        }
+      ],
+      "ingredient" : [
+        {
+          "species" : {
+            "solanum-lycopersicum" : true
+          }
+        }
+      ],
+      "instruction" : {
+
+      }
+    },
+    "tomato-puree" : {
+      "name" : "tomato purée",
+      "type" : {
+        "group" : {
+          "sauce" : true
+        }
+      },
+      "cuisine" : [
+        {
+          "italian" : true
+        },
+        {
+          "french" : true
+        },
+        {
+          "spanish" : true
+        }
+      ],
+      "ingredient" : [
+        {
+          "species" : {
+            "solanum-lycopersicum" : true
+          }
+        }
+      ],
+      "instruction" : {
+        "<placeholder>" : true
+      }
+    },
+    "tomato-sauce" : {
+      "name" : "tomato sauce",
+      "type" : {
+        "group" : {
+          "sauce" : true
+        }
+      },
+      "cuisine" : [
+        {
+          "italian" : true
+        },
+        {
+          "french" : true
+        },
+        {
+          "spanish" : true
+        }
+      ],
+      "ingredient" : [
+        {
+          "species" : {
+            "solanum-lycopersicum" : true
+          }
+        }
+      ],
+      "instruction" : {
+        "<placeholder>" : true
+      }
+    },
+    "passata-di-pomodoro" : {
+      "name" : "passata di pomodoro",
+      "type" : {
+        "group" : {
+          "sauce" : true
+        }
+      },
+      "cuisine" : [
+        {
+          "italian" : true
+        },
+        {
+          "french" : true
+        },
+        {
+          "spanish" : true
+        }
+      ],
+      "ingredient" : [
+        {
+          "species" : {
+            "solanum-lycopersicum" : true
+          }
+        }
+      ],
+      "instruction" : {
+        "<placeholder>" : true
+      }
+    },
+    "marinara-sauce" : {
+      "name" : "Marinara sauce",
+      "type" : {
+        "group" : {
+          "sauce" : true
+        }
+      },
+      "cuisine" : [
+        {
+          "neapolitan" : true
+        }
+      ],
+      "ingredient" : [
+        {
+          "species" : {
+            "solanum-lycopersicum" : true
+          }
+        }
+      ],
+      "instruction" : {
+        "<placeholder>" : true
+      }
+    },
+    "arrabiata" : {
+      "name" : "arrabiata",
+      "type" : {
+        "group" : {
+          "sauce" : true
+        }
+      },
+      "cuisine" : [
+        {
+          "italian" : true
+        }
+      ],
+      "ingredient" : [
+        {
+          "species" : {
+            "solanum-lycopersicum" : true
+          }
+        }
+      ],
+      "instruction" : {
+        "<placeholder>" : true
+      }
+    },
+    "penne-arrabiata" : {
+      "name" : "penne arrabiata",
+      "type" : {
+        "group" : {
+          "pasta" : true
+        }
+      },
+      "cuisine" : [
+        {
+          "italian" : true
+        }
+      ],
+      "ingredient" : [
+        {
+          "preparation" : {
+            "arrabiata" : true
+          }
+        }
+      ],
+      "instruction" : {
+        "<placeholder>" : true
+      }
+    }
+  },
+  "product" : {
+    "<ID>" : {
+      "name" : "Tomato Ketchup",
+      "manufacturer" : "Heinz",
+      "type" : "Ketchup",
+      "ingredient" : [
+        {
+          "chemical" : {
+            "element" : {
+              "fe" : true
+            }
+          }
+        }
+      ],
+      "nutrition" : [
+        {
+          "species" : {
+            "element" : {
+              "fe" : true
+            }
+          }
+        }
+      ]
+    }
+  },
+  "query" : {
+    "<ID>" : {
+      "type" : "ingredient",
+      "term" : "orange",
+      "Result" : {
+        "term" : "Oranges",
+        "kgid" : "kg:/m/0cyhj_",
+        "score" : 60.914623,
+        "updated" : 1464951236949
+      }
+    }
+  },
+  "species" : {
+    "solanum-lycopersicum" : {
+      "name" : "Solanum lycopersicum",
+      "classification" : {
+        "kingdom" : {
+          "title" : "Plantae"
+        },
+        "(unranked)" : {
+          "title" : "Angiosperms"
+        },
+        "(unranked)" : {
+          "title" : "Eudicots"
+        },
+        "(unranked)" : {
+          "title" : "Asterids"
+        },
+        "order" : {
+          "title" : "Solanales"
+        },
+        "family" : {
+          "title" : "Solanaceae",
+          "reference" : "#cite_note-renatovicario-1"
+        },
+        "genus" : {
+          "title" : "Solanum",
+          "reference" : "#cite_note-renatovicario-1"
+        },
+        "species" : {
+          "title" : "S. lycopersicum"
+        }
+      },
+      "synonym" : [
+        {
+          "i" : "Lycopersicon lycopersicum",
+          "small" : "(L.) H. Karst."
+        },
+        {
+          "i" : "Lycopersicon esculentum",
+          "small" : "Mill.",
+          "reference" : "#cite_ref-NHM_3"
+        }
+      ],
+      "content" : [
+        {
+          "chemical" : {
+            "element" : {
+              "fe" : true
+            }
+          }
+        }
+      ]
+    },
+    "sus-scrofa-domesticus" : {
+      "name" : "Sus scrofa domesticus",
+      "classification" : {
+        "kingdom" : "Animalia",
+        "phylum" : "Chordata",
+        "class" : "Mammalia",
+        "order" : "Artiodactyla",
+        "family" : "Suidae",
+        "genus" : "Sus",
+        "species" : "S. scrofa",
+        "subspecies" : "S. s. domesticus"
+      },
+      "synonym" : [
+        {
+          "i" : "Lycopersicon lycopersicum",
+          "small" : "(L.) H. Karst."
+        },
+        {
+          "i" : "Lycopersicon esculentum",
+          "small" : "Mill.",
+          "reference" : "#cite_ref-NHM_3"
+        }
+      ],
+      "content" : [
+        {
+          "chemical" : {
+            "element" : {
+              "fe" : true
+            }
+          }
+        }
+      ]
+    }
+  },
+  "symbiosis" : {
+    "letharia-vulpina" : {
+      "title" : "Letharia vulpina",
+      "mycobiont" : {
+        "species" : "Letharia vulpina"
+      },
+      "phycobiont" : {
+        "genus" : "Trebouxia"
+      }
+    }
+  },
+  "translation" : {
+    "carbon" : {
+      "en" : "carbon",
+      "zh-Hans" : "碳",
+      "zh-Hant" : "碳"
+    },
+    "cholecalciferol" : {
+      "en" : "cholecalciferol",
+      "zh-Hans" : "胆",
+      "zh-Hant" : "膽"
+    },
+    "water" : {
+      "en" : "water",
+      "zh-Hans" : "碳",
+      "zh-Hant" : "碳"
+    }
+  },
+  "user" : {
+    "<ID>" : {
+      "name" : {
+        "given" : "John",
+        "family" : "Smith",
+        "order" : "First, Last",
+        "username" : "johnsmith73"
+      },
+      "recipe" : {
+        "johns-spicy-arrabiata" : {
+          "name" : "John's Spicy Arrabiata",
+          "type" : "arrabiata"
+        },
+        "smithies-blue-ketchup" : {
+          "name" : "Smithie's Blue Ketchup",
+          "type" : "tomato-ketchup"
+        }
+      },
+      "comment" : {
+        "<placeholder>" : true
+      }
+    }
+  }
+}

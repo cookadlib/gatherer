@@ -55,8 +55,8 @@ const vitamins = {
   'InChI=1S/C51H72O2/c1-38(2)20-13-21-39(3)22-14-23-40(4)24-15-25-41(5)26-16-27-42(6)28-17-29-43(7)30-18-31-44(8)32-19-33-45(9)36-37-47-46(10)50(52)48-34-11-12-35-49(48)51(47)53/h11-12,20,22,24,26,28,30,32,34-36H,13-19,21,23,25,27,29,31,33,37H2,1-10H3/b39-22+,40-24+,41-26+,42-28+,43-30+,44-32+,45-36+': 'K'
 };
 
-const formulasRef = db.ref('/chemical/formula');
-const vitaminsRef = db.ref('/chemical/vitamin');
+const formulaRef = db.ref('/chemical/formula');
+const vitaminRef = db.ref('/chemical/vitamin');
 
 const getFormulaDetails = async function(formula) {
 
@@ -157,13 +157,13 @@ const assignVitamin = async function(formula) {
       InChI: formula.InChI
     };
 
-    await vitaminsRef.orderByChild('InChI').equalTo(formula.InChI).once('value').then(async function(snapshot) {
+    await vitaminRef.orderByChild('InChI').equalTo(formula.InChI).once('value').then(async function(snapshot) {
 
       if (snapshot.exists()) {
 
         let key = snapshot.key();
 
-        await vitaminsRef.child(key).set(data)
+        await vitaminRef.child(key).set(data)
         .then(async function(snapshot) {
           logger.info(`New data saved for "${key}" successfully`);
         })
@@ -173,7 +173,7 @@ const assignVitamin = async function(formula) {
 
       } else {
 
-        await vitaminsRef.push().set(data)
+        await vitaminRef.push().set(data)
         .then(async function(snapshot) {
           logger.info(`New data saved for "${key}" successfully`);
         })
@@ -286,7 +286,7 @@ const processFormula = async function(formula) {
     await getFormulaDetails(formula);
     await assignVitamin(formula);
     // await getFormulaSynonyms(formula);
-    await updateOrSet(formulasRef, formula, key);
+    await updateOrSet(formulaRef, formula, key);
 
   }
   catch (error) {

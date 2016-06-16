@@ -42,7 +42,7 @@ const worker = async function() {
   //   return logger.info(snapshot.val());
   // });
 
-  vitaminsRef.orderByChild('class').equalTo('B3').once('value').then((snapshot) => {
+  await vitaminsRef.orderByChild('class').equalTo('B3').once('value').then(async function (snapshot) {
     return logger.info(snapshot.val());
   });
 
