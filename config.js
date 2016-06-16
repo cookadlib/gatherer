@@ -6,7 +6,7 @@ export const nodemw = {
   // protocol: 'https',  // default to 'http'
   server: 'en.wikipedia.org', // host name of MediaWiki-powered site
   path: '/w', // path to api.php script
-  debug: false // is more verbose when set to true
+  debug: true // is more verbose when set to true
 };
 
 export let typesAccepted = [

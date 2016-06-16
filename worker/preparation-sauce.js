@@ -15,14 +15,16 @@ const vitaminsRef = db.ref('/chemical/vitamin');
 const worker = async function() {
 
   try {
-    mediawiki.getPagesInCategory('Sauces', function(error, data) {
-    if (error) {
-      return logger.error(error);
-    }
+    await mediawiki.getPagesInCategory('Sauces', async function(error, data) {
+      if (error) {
+        return logger.error(error);
+      }
 
-    return logger.log(data);
+      return logger.log(data);
+    });
 
-  });
+    let sauces = await mediawiki.getPagesInCategory('Sauces');
+    console.log(sauces);
 
     await vitaminsRef.orderByChild('class').equalTo('B3').once('value').then(async function (snapshot) {
       return logger.info(snapshot.val());
