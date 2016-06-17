@@ -13,15 +13,15 @@ const worker = async function() {
   // vitaminsRef.remove();
 
   // formulasRef.once('value').then((snapshot) => {
-  //   return logger.log(snapshot.val());
+  //   return logger.info(snapshot.val());
   // });
 
   // formulasRef.child('c18976').once('value').then((snapshot) => {
-  //   return logger.log(snapshot.val());
+  //   return logger.info(snapshot.val());
   // });
 
   // formulasRef.orderByChild('formula').equalTo('3ClH.Sb').once('value').then((snapshot) => {
-  //   return logger.log(snapshot.val());
+  //   return logger.info(snapshot.val());
   // });
 
   // formulasRef.once('value', (snapshot) => {

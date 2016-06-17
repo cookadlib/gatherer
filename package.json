@@ -47,6 +47,7 @@
     "node-rest-client": "^1.8.0",
     "nodemw": "^0.9.0",
     "replaceall": "^0.1.6",
+    "request-debug": "^0.2.0",
     "request-promise": "^3.0.0",
     "universal-analytics": "^0.3.11",
     "winston": "^2.2.0"
